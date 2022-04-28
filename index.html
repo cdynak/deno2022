@@ -1,40 +1,1271 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-		<title>reveal.js</title>
+    <title>reveal.js – The HTML Presentation Framework</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <meta
+      name="description"
+      content="A framework for easily creating beautiful presentations using HTML"
+    />
+    <meta name="author" content="Hakim El Hattab" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <section>
+            <img src="dist//images/16_30cezary.png" />
+          </section>
+          <section>
+            <h1>Skąd się bierze Node.js (part2)</h1>
+            <h2>dokąd doprowadzi nas Deno</h2>
+            <h3>Cezary Dynak</h3>
+            <h4>Białystok, 2022-04-26</h4>
+          </section>
+
+          <section>
+            <h2>bibliography is inside source code</h2>
+            <p>
+              <a href="cdynak.github.io/deno2022">cdynak.github.io/deno2022</a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>CEZARY DYNAK</h2>
+            <h3>about me</h3>
+          </section>
+          <section>
+            <h2>Now</h2>
+            <h3>Head of Node.js @ STX Next</h3>
+          </section>
+          <section>
+            <img src="dist//images/bema7-house.png" />
+          </section>
+          <section>
+            <img src="dist//images/bema7-stxnext.jpg" />
+          </section>
+          <section>
+            <h2>My story</h2>
+            <p>2012-2016</p>
+            <ul>
+              <li>Nexwell Engineering</li>
+              <li>PWr / W4 / AiR / lab07</li>
+            </ul>
+            <p>2017-2020</p>
+            <ul>
+              <li>Viessmann R&D</li>
+              <li>Spyrosoft</li>
+            </ul>
+            <p>2021-</p>
+            <ul>
+              <li>STX Next</li>
+              <li>dynak.com sp. z o. o.</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Deno Deploy</h3>
+          </section>
+          <section>
+            <a href="https://github.com/yarex2/deno-deploy-app"
+              >https://github.com/yarex2/deno-deploy-app</a
+            >
+          </section>
+        </section>
+
+        <section>
+          <h3>Slack CLI built in Deno</h3>
+          <p>
+            <small>Yes, that's truth.</small>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h3>Why Deno? It's better than Node?</h3>
+          </section>
+          <section>
+            <p>
+              <small
+                >Node.js is based on C++ uses the V8 engine to execute
+                JavaScript code.</small
+              >
+            </p>
+            <p>
+              <small
+                >Deno also relies on the V8 engine, but instead of C++, Deno is
+                based on Rust — a programming language that is supposed to
+                deliver similarly good performance as C++.</small
+              >
+            </p>
+          </section>
+          <section>
+            <h3>Security Security Security !</h3>
+            <p>
+              <small
+                >Deno takes security seriously and gives it a priority. It
+                executes the code in a sandbox as opposed to Node so by default
+                our program does not have access to the file system, network,
+                environment, variables, and the execution of the other scripts.
+                If we want to use these resources we have to ask for the
+                permissions or use the corresponding security flags when we run
+                our scripts.</small
+              >
+            </p>
+            <pre><code style="
+						font-size: large;
+					" data-trim data-noescape>
+						deno run --allow-net index.ts 
+					</code></pre>
+          </section>
+
+          <section>
+            <h3>Goodbye NPM, hello ES6 import</h3>
+            <p>
+              <small
+                >Deno does not rely on NPM at all — instead we import our
+                libraries via the URL, as shown already in the code example
+                above.</small
+              >
+            </p>
+            <pre><code style="
+						font-size: large;
+					" data-trim data-noescape>
+						import { serve } from “https://deno.land/std@0.50.0/http/server.ts";	
+					</code></pre>
+
+            <p>
+              <small
+                >The library we want to use is downloaded with it the first time
+                it is executed and then cached</small
+              >
+            </p>
+          </section>
+
+          <section>
+            <h3>TypeScript support out of the box</h3>
+            <p>
+              <small
+                >TypeScript is of course a matter of taste, celebrated by many,
+                but also seen by some as unnecessary. But what I can say is that
+                both sides can be happy with Deno — because Deno offers
+                TypeScript support straight out of the box, but of course it
+                also supports classic JavaScript.</small
+              >
+            </p>
+          </section>
+
+          <section>
+            <a href="https://deno.land/#installation">
+              <img
+                src="./dist//images/deno-comparison-with-node.webp"
+                alt="deno install"
+                style="
+                  height: 700px;
+                  margin: 0 auto 4rem auto;
+                  background: transparent;
+                "
+              />
+            </a>
+          </section>
+        </section>
+
+        <section>
+          <p>Deno installation</p>
+          <a href="https://deno.land/#installation">
+            <img
+              src="./dist//images//deno_install.png"
+              alt="deno install"
+              style="
+                height: 500px;
+                margin: 0 auto 4rem auto;
+                background: transparent;
+              "
+            />
+          </a>
+        </section>
+
+        <section>
+          <p>Slack CLI installation</p>
+          <p>
+            <small
+              >Slack CLI is in closed beta. Please request to Slack to
+              participate.</small
+            >
+          </p>
+          <br />
+          <a href="https://stxnext.slack.com/platform-beta">
+            <img
+              src="./dist//images/slack api form.png"
+              style="
+                height: 400px;
+                margin: 0 auto 4rem auto;
+                background: transparent;
+              "
+            />
+          </a>
+        </section>
+        <section>
+          <p>Authenticate the CLI</p>
+          <p>
+            <small
+              >Generate an authentication ticket by running the command slack
+              login.</small
+            >
+          </p>
+          <pre><code style="
+					font-size: large;
+				" data-trim data-noescape>
+					slack login</code></pre>
+          <p>
+            <small
+              >This produces some output in your terminal, which says that slack
+              is waiting for authentication. We'll do that now.
+            </small>
+          </p>
+          <p>
+            <small>
+              To begin authentication, find the authentication ticket from the
+              terminal output—which looks something like this:</small
+            >
+          </p>
+          <pre><code style="
+					font-size: large;
+				" data-trim data-noescape>/slackauthticket ABC123defABC123defABC123defABC123defXYZ</code></pre>
+        </section>
+        <section>
+          <p>Create an app using the Slack CLI</p>
+          <p>
+            <small
+              >Next, we'll run the CLI's create command. There are two ways to
+              run create:
+
+              <pre><code style="
+							font-size: large;
+						" data-trim data-noescape>$ slack create</code></pre>
+              which will create a new project for you with a random name, or
+              <pre><code style="
+							font-size: large;
+						" data-trim data-noescape>$ slack create my-app</code></pre>
+              where my-app is a name that you choose.
+            </small>
+          </p>
+          <p>
+            <small
+              >For this guide, let's create an app with a name that matches the
+              starter code we'll see in the next section. Go ahead and run the
+              following:
+            </small>
+          </p>
+          <pre><code style="
+						font-size: large;
+					" data-trim data-noescape>
+					$ slack create reverse-string</code></pre>
+          <p>
+            <small>
+              You'll see some output confirming that "reverse-string" was
+              successfully created, which includes a new folder reverse-string.
+              Head in to that directory:
+            </small>
+          </p>
+          <pre><code style="
+					font-size: large;
+					" data-trim data-noescape>
+					$ cd reverse-string</code></pre>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+					#### Understand the app structure
+					The structure of next-generation Slack platform apps aims to favor convention over configuration.
+
+
+					```js 
+					$ ls
+					.slack/
+					README.md
+					assets/
+					functions/
+					tables/
+					triggers/
+					workflows/
+					import_map.json
+					project.ts
+					```
+				</textarea
+          >
+          <a href="#/2">
+            <img
+              class="r-frame"
+              style="
+                background: rgba(255, 255, 255, 0.1);
+                transform: rotate(180deg);
+              "
+              width="178"
+              height="238"
+              data-src="https://static.slid.es/reveal/arrow.png"
+              alt="Up arrow"
+            />
+          </a>
+        </section>
+
+        <section data-auto-animate>
+          <p>Understand the app structure</p>
+
+          <p style="font-size: 0.5em">
+            <small>
+              There are four relevant areas to focus on at this point: the
+              functions, triggers, and workflows folders, and the project.ts
+              file.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >functions/</code
+              >
+              the Functions you define that can be invoked by Workflows will
+              each be in a separate file here.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >triggers/</code
+              >
+              the Triggers that can invoke Workflows, each in a separate file.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >workflows/</code
+              >
+              the Workflows that can be invoked by Triggers, also in separate
+              files.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >project.ts</code
+              >
+              the project definition. Here you will specify information about
+              your app, including the specific triggers and tables that your app
+              will be using.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >tables/</code
+              >
+              table definitions that enable your app to store and retrieve data
+              hosted on Slack's infrastructure. Tables are covered in-depth in
+              their own tutorial.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >.slack/</code
+              >
+              a home for internal configuration files, scripts hooks, and the
+              app SDK. This directory must be checked in to your version
+              control.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >import_map.json</code
+              >
+              a helper file for Deno that specifies where modules should be
+              imported from.
+            </small>
+          </p>
+          <p style="font-size: 0.5em">
+            <small>
+              <code
+                style="
+                  background: #e8f5fa;
+                  border: 1px solid rgba(11, 76, 140, 0.2);
+                  border-radius: 4px;
+                  color: #0b4c8c;
+                  display: inline-block;
+                  font-size: 75%;
+                  font-weight: 400;
+                  padding: 0 4px;
+                  white-space: normal;
+                "
+                >assets/</code
+              >
+              a place to store assets related with the project. This is a great
+              place to store the icon that your app will display when users
+              interacts with it.
+            </small>
+          </p>
+        </section>
+
+        <section data-auto-animate>
+          <section data-markdown>
+            <textarea data-template>
+					#### Deploy and run your app
+					The structure of next-generation Slack platform apps aims to favor convention over configuration.
+
+					There are two ways to deploy and run your app: Local development mode ("dev"), and App Hosted mode ("prod").
+
+				</textarea
+            >
+          </section>
+          <section>
+            <h2>Local development mode</h2>
+            <p>
+              <small>
+                developing your app, you can run it on your machine and sync
+                changes in real-time using the local development server built in
+                to the slack CLI.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Navigate to your project's root folder at the command prompt.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Then, execute slack run. You'll be prompted to choose a
+                workspace to install your dev app. Select the workspace from
+                which we authorized the CLI back in Step 3, Authorize your CLI.
+                A local development server will start up and begin listening for
+                activity.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Jump in to Slack and look for your app. You should be able to
+                find a version of your app with (dev) appended to it's name.
+                This is your "development" app.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                To see the local development server in action, go back to
+                project.ts and update the name of your app. When you save
+                changes, the local development server will notice the changed
+                file and update the name of your app accordingly.
+              </small>
+            </p>
+          </section>
+          <section>
+            <h2>App Hosted mode</h2>
+            <p>
+              <small>
+                When your app is production-ready and you want to deploy it, use
+                slack deploy to get it installed into the workspace of your
+                choice.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Navigate to your project's root folder at the command prompt,
+                then execute slack deploy.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                You'll be prompted to choose a workspace to install your app.
+                Select the workspace from which we authorized the CLI back in
+                Step 3, Authorize your CLI. Notice that slack will package up
+                and deploy your app, then put you right back at the command
+                prompt; there's no local development server when deploying this
+                way.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Jump in to Slack and look for your production app. You'll know
+                it's the production version of your app because it does not have
+                (dev) appended to its name.
+              </small>
+            </p>
+          </section>
+        </section>
+
+        <section data-auto-animate>
+          <section>
+            <h3>Publishing & consuming message metadata</h3>
+            <p>
+              <small>
+                Message metadata allows your Slack app to link a message inside
+                Slack to a corresponding outside event or pattern. For example,
+                if we wanted to add metadata about a customer to a message that
+                alerts a channel whenever a new customer is created, we can
+                start with the message object:
+              </small>
+            </p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers>
+						{
+							"channel": "A12345",
+							"text": "A new customer record has been created."
+						}
+					</code></pre>
+          </section>
+          <section>
+            <p><small> Then, we can attach some metadata to it: </small></p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers>
+					{
+						"channel": "A12345",
+						"text": "A new customer record has been created.",
+						"metadata": {
+							"event_type": "customer_created",
+							"event_payload": {
+								"crm_id": "123456ABCD",
+								"external_id": "QWERTY12",
+								"nurture_step": "new_account"
+							}
+						}
+					}
+				</code></pre>
+            <p>
+              <small>
+                Now, when that message is sent, either your or another app's
+                Event Trigger can respond to this new message based on the
+                metadata <b>event_type</b>. Maybe our CRM will perform some
+                nurturing automations based on this new customer being created.
+                Maybe the folks handling accounts payable use an app to
+                automatically update their systems based on some external ID.
+                Whatever the case may be, you determine the unique
+                <b>event_type</b> for your automations as well as the structure
+                of the event_payload, giving you the opportunity to customize
+                exactly how your apps and external systems communicate with each
+                other.
+              </small>
+            </p>
+          </section>
+          <section>
+            <h5>Sending Metadata via REST API call</h5>
+            <p>
+              <small>
+                In order to send metadata with a <b>message</b> , include a
+                <b>metadata</b> parameter. You'll use two keys,
+                <b>event_type</b> and <b>event_payload</b>, inside metadata.
+              </small>
+            </p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers>
+								POST /api/chat.postMessage
+								Host: slack.com
+								Authorization: Bearer xoxb-6050345600-60510457-…
+								Content-type: application/json; charset=utf-8
+								{
+									"channel": "C23456",
+									"text": "New task Added by @sam - Redesign homepage",
+									"metadata": {
+										"event_type": "task_created",
+										"event_payload": {
+											"id": "TK-2132",
+											"summary": "New issue with the display of mobile element",
+											"description": "An end user has found a problem with the new mobile container for data entry. It was reproduced in the current version of IOS.",
+											"priority": "HIGH",
+											"resource_ type": "TASK"
+										}
+									}
+								}
+						</code></pre>
+          </section>
+          <section>
+            <h5>Sending Metadata via Cli</h5>
+            <p>
+              <small
+                >If you're sending messages directly from your future generation
+                app, you can invoke the client directly from the SDK in
+                Typescript. In the below custom Function example, client is
+                provided in the async function handler:</small
+              >
+            </p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers style="
+						font-size: 14px;
+					">
+						export const SendExampleMessage = DefineFunction(
+							"send_example_message",
+							{
+								title: "Send Example Message",
+								description: "Sends a message with metadata via chat.postMessage",
+								input_parameters: {
+								required: ["the_channel_id"],
+								properties: {
+									the_channel_id: {
+									type: Schema.slack.types.channel_id,
+									description: "The channel to post the message.",
+									},
+								},
+								},
+								output_parameters: {
+								required: ["result"],
+								properties: {
+									result: {
+									type: Schema.types.object,
+									description: "Result of chat.postMessage",
+									},
+								},
+								},
+							},
+							async ({ inputs, client, env }) => {
+								const result = await client.call("chat.postMessage", {
+								channel: inputs.the_channel_id,
+								text:
+									"The door reluctantly opens to reveal a rickety staircase descending into darkness.",
+								metadata: {
+									event_type: "door_opened",
+									event_payload: {
+									id: "ZORK-TRAP-DOOR-1313",
+									summary: "The user opened the trap door to reveal a staircase",
+									results: [
+										"door:reluctant",
+										"door:open",
+										"staircase:descending",
+										"darkness:foreboding",
+									],
+									waiting_for: "COMMAND",
+									},
+								},
+								});
+
+								return await {
+								outputs: { result },
+								};
+							},
+						);
+					</code></pre>
+          </section>
+          <section>
+            <h5>Receiving metadata via REST API</h5>
+            <p><small>Example request</small></p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers style="
+						font-size: 14px;
+						">
+						GET /api/conversations.history?channel=C1234224&include_metadata=true
+						HOST: slack.com
+						Authorization: Bearer xoxb-12501860787-17163110960-...
+						Example response
+					</code></pre>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers style="
+						font-size: 14px;
+						">
+						{
+							"ok": true,
+							"messages": [
+								{
+									"type": "message",
+									"user": "U012AB3CDE",
+									"text": "New task Added by @sam - Redesign homepage",
+									"app_id": "A01234",
+									"metadata": {
+										"event_type": "task_added",
+										"event_payload": {
+											"id": "11223",
+											"title": "Redesign homepage",
+											"creator": "sam@acme-corp.com",
+											"created_at": "1610561787",
+											"priority": "high",
+											"status": "triage"
+										}
+									},
+									"ts": "1512085950.000216"
+								},
+								{
+									"type": "message",
+									"user": "U061F7AUR",
+									"text": "I'm going to start working on :point_up: task",
+									"ts": "1512104434.000490"
+								}
+							],
+							"has_more": true,
+							"pin_count": 0,
+							"response_metadata": {
+								"next_cursor": "bmV4dF90czoxNTEyMDg1ODYxMDAwNTQz"
+							}
+						}
+					</code></pre>
+          </section>
+          <section>
+            <h5>Receiving metadata via Events API</h5>
+            <p>
+              <small
+                >You can receive message metadata when you subscribe to the
+                <b>messages.*</b> events. If a message has metadata, it will be
+                available in the event payload.</small
+              >
+            </p>
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim data-line-numbers style="
+						font-size: 14px;
+						">
+						{
+							"event": {
+								"type": "message",
+								"channel": "C024BE91L",
+								"user": "U2147483697",
+								"text": "New task Added by @sam - Redesign homepage",
+								"app_id": "A01234",
+								"metadata": {
+									"event_type": "task_added",
+									"event_payload": {
+										"id": "11223",
+										"title": "Redesign homepage",
+										"creator": "sam@acme-corp.com",
+										"created_at": "1610561787",
+										"priority": "high",
+										"status": "triage"
+									}
+								},
+								"ts": "1355517523.000005",
+								"event_ts": "1355517523.000005",
+								"channel_type": "channel"
+							}
+						}
+					</code></pre>
+          </section>
+        </section>
+
+        <section data-auto-animate>
+          <h5>Creating reusable functions</h5>
+          <p>
+            <small>
+              Functions are the building blocks of the next generation of the
+              Slack platform. They are standalone modules of functionality that
+              can be added, by anyone, to workflows in Workflow Builder.
+              Functions define inputs and outputs of a type, such as string for
+              a string of text or channel for a Slack channel, and do some unit
+              of work such as calling an external API or running a database
+              query. Most functions will probably call an API so one way to
+              think of a function is a Slack-specific wrapper for an API or,
+              alternately, a way to make an API method easily available inside
+              of Slack.
+            </small>
+          </p>
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					import { DefineFunction, Schema } from "slack-cloud-sdk/mod.ts";
+
+					export const ReverseString = DefineFunction(
+					"reverse",
+					{
+						title: "Reverse",
+						description: "Takes a string and reverses it",
+						input_parameters: {
+						required: [],
+						properties: {
+							stringToReverse: {
+							type: Schema.types.string,
+							description: "The string to reverse",
+							},
+						}
+						},
+						output_parameters: {
+						required: [],
+						properties: {
+							reverseString: {
+							type: Schema.types.string,
+							description: "The string in reverse",
+							},
+						}
+						},
+					},
+					async ({ inputs, env }) => {
+						console.log(`reversing ${inputs.stringToReverse}.`);
+						console.log(`SLACK_API_URL=${env["SLACK_API_URL"]}`);
+
+						const reverseString = inputs.stringToReverse.split("").reverse().join("");
+						return await {
+						outputs: { reverseString },
+						};
+					},
+					);
+					</script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h5>Using built-in functions provided by Slack</h5>
+          <p>
+            <small>
+              Built-in functions need to be imported from the standard library
+              built into the SDK — all built-in functions are children of the
+              <b>Schema.slack.functions</b> object. Just like custom Functions,
+              built-ins are then added to steps in a Workflow using the
+              <b>addStep</b> method.
+            </small>
+          </p>
+
+          <p>
+            <small>
+              Here's an example of a Workflow that creates a new Slack channel
+              using the CreateChannel built-in function:
+            </small>
+          </p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					import { DefineWorkflow, Schema } from "slack-cloud-sdk/mod.ts"
+
+					...
+
+					const createChannelStep = myWorkflow.addStep(
+						Schema.slack.functions.CreateChannel,
+						{
+							channel_name: myWorkflow.inputs.channel_name,
+							is_private: false,
+						},
+					);
+					</script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <section data-auto-animate>
+            <h5>Bundling functionality with workflows</h5>
+            <p>
+              <small>
+                A Workflow is a set of processing steps that are executed in
+                order. Each step in a Workflow is either a custom function that
+                you define or a built-in function that comes with slack.
+                Workflows can be configured to run without any user input, or
+                they can wait for input before continuing. When defining a
+                Workflow, specifying input parameters that are not hidden will
+                cause a modal to open and wait for input from the invoking user
+                when the Workflow is invoked with a Shortcut trigger.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                Here's an example of a Workflow that creates a new Slack channel
+                using the CreateChannel built-in function:
+              </small>
+            </p>
+
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim ><script type="text/template">
+					import { DefineWorkflow, Schema } from "slack-cloud-sdk/mod.ts"
+
+					...
+
+					const createChannelStep = myWorkflow.addStep(
+						Schema.slack.functions.CreateChannel,
+						{
+							channel_name: myWorkflow.inputs.channel_name,
+							is_private: false,
+						},
+					);
+					</script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <h5>Defining Workflows</h5>
+            <p>
+              <small>
+                Workflows are defined in the <b>/workflows</b> folder of your
+                project. Each file should contain one workflow, and should begin
+                by importing the Slack Cloud SDK:
+              </small>
+            </p>
+
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim ><script type="text/template">
+							import { DefineWorkflow, Schema } from "slack-cloud-sdk/mod.ts";
+						</script></code></pre>
+
+            <p>
+              <small>
+                Workflow files have two primary components:
+                <ul>
+                  <li>
+                    the Workflow definition, in which you provide a name,
+                    description, and optionally define input parameters, and
+                  </li>
+                  <li>
+                    the Workflow steps, which are invocations of functions
+                    (custom or built-in) that happen one after another.
+                  </li>
+                </ul>
+              </small>
+            </p>
+          </section>
+          <section>
+            <p>
+              <small>
+                To illustrate both the definition and the steps, let's look at a
+                sample Workflow that accepts no input parameters and calls one
+                built-in function, SendMessage:
+              </small>
+            </p>
+
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim ><script type="text/template">
+						// /workflows/say_hello_workflow.ts
+						
+						// Workflow definition
+						export const SayHelloWorkflow = DefineWorkflow("say_hello_workflow", {
+							title: "My Workflow",   
+							description: "A sample workflow.",  
+							input_parameters: { 
+								required: [],
+								properties: {},
+							},
+						});
+						
+						// Workflow steps
+						SayHelloWorkflow.addStep(Schema.slack.functions.SendMessage, {
+							channel_id: "C1234567",
+							message: "Hello, World!"
+						});
+					</script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <h5>Adding an input parameter to a workflow</h5>
+            <p>
+              <small>
+                Input parameters are listed in the properties property. Each
+                input parameter must include a type and a description, and can
+                optionally include a default value.
+              </small>
+            </p>
+
+            <pre
+              data-id="code-animation"
+            ><code class="hljs" data-trim ><script type="text/template">
+						// Workflow definition
+						export const SayHelloWorkflow = DefineWorkflow("say_hello_workflow", {
+						  title: "My Workflow",   
+						  description: "A sample workflow.",  
+						  input_parameters: { 
+							required: [],
+							properties: {
+								exampleString: {
+								  type: Schema.types.string,
+								  description: "Here's an example string.",
+								},
+								exampleBoolean: {
+								  type: Schema.types.boolean,
+								  description: "An example boolean.",
+								  default: true,
+								},
+								exampleInteger: {
+								  type: Schema.types.integer,
+								  description: "An example integer.",
+								},
+								exampleChannelId: {
+								  type: Schema.slack.types.channel_id,
+								  description: "Example channel ID.",
+								},
+								exampleUserId: {
+								  type: Schema.slack.types.user_id,
+								  description: "Example user ID.",
+								},
+								exampleUsergroupId: {
+								  type: Schema.slack.types.usergroup_id,
+								  description: "Example usergroup ID.",
+								},
+							  }
+						  }
+						});
+						</script></code></pre>
+          </section>
+        </section>
+
+        <section data-auto-animate>
+          <h5>Using built-in functions in a workflow</h5>
+          <p><small> To use a built-in function, like SendMessage: </small></p>
+          <p>
+            <small>
+              1. Ensure that Schema from the SDK is imported in your Workflow
+              file:
+            </small>
+          </p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					import { Schema } from "slack-cloud-sdk/mod.ts";
+					</script></code></pre>
+          <p><small> 2. Use the function in one of your steps: </small></p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					// Example: taking the string output from a function and passing it to SendMessage
+					MyWorkflow.addStep(Schema.slack.functions.SendMessage, {
+					channel_id: MyWorkflow.inputs.channelId,
+					message: MyWorkflow.inputs.someString
+					});
+					</script></code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h5>Using custom functions in a workflow</h5>
+          <p><small> To use a custom function that you define: </small></p>
+          <p>
+            <small>
+              1. Import the function in the file where the Workflow is defined:
+            </small>
+          </p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					import { MyFunction } from "../functions/myFunction.ts";
+					</script></code></pre>
+          <p>
+            <small>
+              2. Call your function, storing its output in a variable. Here you
+              may also pass input parameters from the Workflow into the Function
+              itself:
+            </small>
+          </p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					import { MyFunction } from "../functions/my_function.ts";
+
+					export const MyWorkflow = DefineWorkflow(
+					title: "My Workflow",
+					description: "A sample workflow.",
+					input_parameters: {
+						required: [],
+						properties: {
+						someString: {
+							type: Schema.types.string,
+							description: "Some string"
+						},
+						channelId: {
+							type: Schema.slack.types.channel_id,
+							description: "Target channel.",
+							default: "C1234567"
+						}
+						}
+					}
+					);
+
+					const myFunctionResult = MyWorkflow.addStep(MyFunction, {
+					// ... Pass along workflow inputs via MyWorkflow.inputs
+					// ... For example, MyWorkflow.inputs.someString
+					});
+					</script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <p><small> 3. Use your function in follow-on steps. </small></p>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					// Example: taking the string output from a function and passing it to SendMessage
+					MyWorkflow.addStep(Schema.slack.functions.SendMessage, {
+					  channel_id: MyWorkflow.inputs.channelId,
+					  message: myFunctionResult.outputs.exampleOutput // This comes from your Function definition
+					});
+									</script></code></pre>
+
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim ><script type="text/template">
+					// Example: invoking a custom function as a step in a workflow
+					MyWorkflow.addStep(MyFunction, {
+					someInputVariable: MyWorkflow.inputs.someInput
+					});
+					</script></code></pre>
+        </section>
+
+        <section>
+          <h2>Much more</h2>
+          <ul>
+            <li>
+              <a href="https://api.slack.com/future">Slack API based on Deno</a>
+            </li>
+            <li><a href="https://deno.land/">Deno official page</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h2>Thank you for attention</h2>
+          </section>
+          <section>
+            <h2>discussion / questions?</h2>
+          </section>
+          <section>
+            <h2>bibliography is inside source code</h2>
+            <p>
+              <a href="cdynak.github.io/deno2022">cdynak.github.io/deno2022</a>
+            </p>
+          </section>
+
+          <section>
+            <img
+              src="https://raw.githubusercontent.com/meetjspl/brand-assets/master/logo/meetjs-logo-white.png"
+            />
+          </section>
+
+          <section>
+            <img src="./dist/images/MLECZARNIA.png" />
+            <p>
+              <a href="http://niemusiszkonczycstudiow.org/"
+                >http://niemusiszkonczycstudiow.org/</a
+              >
+            </p>
+          </section>
+          <!--
+				add https://linktr.ee/niemusiszkonczycstudiow
+				other events: meet.js, TSH, dev.js, TypeScript Congress
+			-->
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // Also available as an ES module, see:
+      // https://revealjs.com/initialization/
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [
+          RevealZoom,
+          RevealNotes,
+          RevealSearch,
+          RevealMarkdown,
+          RevealHighlight,
+        ],
+      });
+    </script>
+  </body>
 </html>
